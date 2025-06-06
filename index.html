@@ -141,65 +141,70 @@
     <audio id="takbeer" src="takbeer2.mp3"></audio>
 
     <script>
-      document.addEventListener("DOMContentLoaded", function () {
-        // Play audio on interaction
-        document.body.addEventListener("click", function () {
-          const audio = document.getElementById("takbeer");
-          audio.volume = 0.3;
-          audio.play().catch((e) => console.log("Audio play prevented:", e));
-        });
+  document.addEventListener("DOMContentLoaded", function () {
+    const audio = document.getElementById("takbeer");
+    audio.volume = 0.3;
 
-        // Confetti effect on click
-        document.body.addEventListener("click", function (e) {
-          createConfetti(e.clientX, e.clientY);
-        });
+    // Play audio on page load
+    audio.play().catch((e) => console.log("Audio play prevented:", e));
 
-        function createConfetti(x, y) {
-          const colors = ["#FFD700", "#FFFFFF", "#FFA500"];
-          for (let i = 0; i < 10; i++) {
-            const confetti = document.createElement("div");
-            confetti.style.position = "fixed";
-            confetti.style.left = x + "px";
-            confetti.style.top = y + "px";
-            confetti.style.width = "8px";
-            confetti.style.height = "8px";
-            confetti.style.backgroundColor =
-              colors[Math.floor(Math.random() * colors.length)];
-            confetti.style.borderRadius = "50%";
-            confetti.style.pointerEvents = "none";
-            confetti.style.zIndex = "1000";
+    // Play audio on interaction (optional, in case autoplay is blocked)
+    document.body.addEventListener("click", function () {
+      audio.play().catch((e) => console.log("Audio play prevented:", e));
+    });
 
-            const angle = Math.random() * Math.PI * 2;
-            const velocity = 3 + Math.random() * 3;
-            const rotation = Math.random() * 360;
+    // Confetti effect on click
+    document.body.addEventListener("click", function (e) {
+      createConfetti(e.clientX, e.clientY);
+    });
 
-            let posX = x;
-            let posY = y;
-            let opacity = 1;
+    function createConfetti(x, y) {
+      const colors = ["#FFD700", "#FFFFFF", "#FFA500"];
+      for (let i = 0; i < 10; i++) {
+        const confetti = document.createElement("div");
+        confetti.style.position = "fixed";
+        confetti.style.left = x + "px";
+        confetti.style.top = y + "px";
+        confetti.style.width = "8px";
+        confetti.style.height = "8px";
+        confetti.style.backgroundColor =
+          colors[Math.floor(Math.random() * colors.length)];
+        confetti.style.borderRadius = "50%";
+        confetti.style.pointerEvents = "none";
+        confetti.style.zIndex = "1000";
 
-            document.body.appendChild(confetti);
+        const angle = Math.random() * Math.PI * 2;
+        const velocity = 3 + Math.random() * 3;
+        const rotation = Math.random() * 360;
 
-            const animate = () => {
-              posX += Math.cos(angle) * velocity;
-              posY += Math.sin(angle) * velocity + 0.5; // gravity
-              opacity -= 0.02;
+        let posX = x;
+        let posY = y;
+        let opacity = 1;
 
-              confetti.style.left = posX + "px";
-              confetti.style.top = posY + "px";
-              confetti.style.opacity = opacity;
-              confetti.style.transform = `rotate(${rotation}deg)`;
+        document.body.appendChild(confetti);
 
-              if (opacity > 0) {
-                requestAnimationFrame(animate);
-              } else {
-                confetti.remove();
-              }
-            };
+        const animate = () => {
+          posX += Math.cos(angle) * velocity;
+          posY += Math.sin(angle) * velocity + 0.5; // gravity
+          opacity -= 0.02;
 
-            animate();
+          confetti.style.left = posX + "px";
+          confetti.style.top = posY + "px";
+          confetti.style.opacity = opacity;
+          confetti.style.transform = `rotate(${rotation}deg)`;
+
+          if (opacity > 0) {
+            requestAnimationFrame(animate);
+          } else {
+            confetti.remove();
           }
-        }
-      });
-    </script>
+        };
+
+        animate();
+      }
+    }
+  });
+</script>
+
   </body>
 </html>
